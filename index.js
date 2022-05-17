@@ -41,6 +41,9 @@ class Person {
         }
         this.Events = NewEvents;
     }
+    get createdAt() {
+        return this.#createdAt
+    }
     addFriend(Person) {
         this.Friends.push(Person);
         this.Events.friendAdded.Fire(Person)
@@ -49,6 +52,7 @@ class Person {
 }
 
 const Bob = new Person("Bob", 23)
+console.log(Bob.createdAt)
 
 const Event = Bob.Events.friendAdded.Connect(function(value){
     const Friend = value[0]
