@@ -42,26 +42,26 @@ class Person {
         this.Events = NewEvents;
     }
     get createdAt() {
-        return this.#createdAt
+        return this.#createdAt;
     }
     addFriend(Person) {
         this.Friends.push(Person);
-        this.Events.friendAdded.Fire(Person)
+        this.Events.friendAdded.Fire(Person);
         return this.Friends;
     }
 }
 
-const Bob = new Person("Bob", 23)
-console.log(Bob.createdAt)
+const Bob = new Person("Bob", 23);
+console.log(Bob.createdAt);
 
-const Event = Bob.Events.friendAdded.Connect(function(value){
-    const Friend = value[0]
-    console.log("Added friend: ", Friend.Name)
-})
+const Event = Bob.Events.friendAdded.Connect(function (value) {
+    const Friend = value[0];
+    console.log("Added friend: ", Friend.Name);
+});
 
-const Jimmy = new Person("Jimmy", 2000)
+const Jimmy = new Person("Jimmy", 2000);
 
-Bob.addFriend(Jimmy)
-Bob.addFriend(Bob)
+Bob.addFriend(Jimmy);
+Bob.addFriend(Bob);
 
 Event.Disconnect();
