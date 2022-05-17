@@ -50,7 +50,7 @@ class Person {
 
 const Bob = new Person("Bob", 23)
 
-Bob.Events.friendAdded.Connect(function(value){
+const Event = Bob.Events.friendAdded.Connect(function(value){
     const Friend = value[0]
     console.log("Added friend: ", Friend.Name)
 })
@@ -59,3 +59,5 @@ const Jimmy = new Person("Jimmy", 2000)
 
 Bob.addFriend(Jimmy)
 Bob.addFriend(Bob)
+
+Event.Disconnect();
