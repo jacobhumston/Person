@@ -209,3 +209,6 @@ Jimmy.removeFriend(Bob);
 
 Bob.Say("Jimmy, I'm going to kill you! >:(");
 Jimmy.Kill();
+
+Jimmy.Log();
+Jimmy.removeFriend(Bob);
