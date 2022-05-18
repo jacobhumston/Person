@@ -74,7 +74,11 @@ class Person {
     }
 
     get eventList() {
-        return this.#Events;
+        const ShallowCopy = [];
+        for (const Event of this.#Events) {
+            ShallowCopy.push(Event);
+        }
+        return ShallowCopy;
     }
 
     #validatePerson(Person, Context) {
@@ -155,4 +159,4 @@ Jimmy.friendAdded.Connect(function (Values) {
 });
 
 Bob.addFriend(Jimmy);
-Bob.removeFriend(Jimmy);
+Jimmy.removeFriend(Bob);
