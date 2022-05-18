@@ -116,6 +116,27 @@ class Person {
         }
     }
 
+    disconnectAllEvents() {
+        const Success = [];
+        const Errors = [];
+        for (const Event of this.#Events) {
+            const Connection = this[Event].Connect(function () {});
+            try {
+                Connection.disconnectAll();
+                Success.push(Event);
+            } catch (Message) {
+                Errors.push({
+                    Event: Event,
+                    Error: Message,
+                });
+            }
+        }
+        return {
+            Success: Success,
+            Errors: Errors,
+        };
+    }
+
     addFriend(Person, dontThrowIfAlreadyFriends) {
         this.#safetyCheck();
         dontThrowIfAlreadyFriends = dontThrowIfAlreadyFriends ?? false;
@@ -211,4 +232,5 @@ Bob.Say("Jimmy, I'm going to kill you! >:(");
 Jimmy.Kill();
 
 Jimmy.Log();
+console.log(Bob.disconnectAllEvents());
 Jimmy.removeFriend(Bob);
