@@ -183,6 +183,12 @@ class Person {
         this.Died.Fire();
     }
 
+    Clone() {
+        const NewPerson = new Person(this.Name, this.Age);
+        // @jacobhumston - Maybe clone everything else later? For now that doesn't seem needed.
+        return NewPerson;
+    }
+
     toString() {
         return this.Name;
     }
@@ -224,6 +230,9 @@ Bob.Died.Connect(function () {
 Jimmy.Died.Connect(function () {
     console.log("Jimmy has died.");
 });
+
+Bob2 = Bob.Clone();
+Bob2.Name = "I'm alive...";
 
 Bob.addFriend(Jimmy);
 Jimmy.removeFriend(Bob);
