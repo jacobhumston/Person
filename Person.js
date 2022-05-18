@@ -185,7 +185,7 @@ class Person {
 
     Clone() {
         const NewPerson = new Person(this.Name, this.Age);
-        // @jacobhumston - Maybe clone everything else later? For now that doesn't seem needed.
+        // Maybe clone everything else later? For now that doesn't seem needed.
         return NewPerson;
     }
 
