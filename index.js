@@ -1,17 +1,19 @@
 class Person {
     Name;
     Age;
+    #isDead;
     #Friends;
-    #ID;
+    #Id;
     #isPerson;
     #createdAt;
-    #Events = ["friendAdded", "friendRemoved"];
+    #Events = ["friendAdded", "friendRemoved", "Died"];
 
     constructor(Name, Age) {
         this.Name = Name ?? "No Name";
         this.Age = Age ?? 0;
+        this.#isDead = false;
         this.#Friends = [];
-        this.#ID = "ID-" + Date.now();
+        this.#Id = "ID-" + Date.now();
         this.#isPerson = true;
         this.#createdAt = new Date(Date.now());
         for (const Event of this.#Events) {
@@ -31,7 +33,14 @@ class Person {
                             if (Index != -1) {
                                 Functions.splice(Index);
                             } else {
-                                throw "Event was already disconnected or removed.";
+                                throw "Function was already disconnected or removed.";
+                            }
+                        },
+                        disconnectAll: function () {
+                            if (Functions.length > 0) {
+                                Functions.length = 0;
+                            } else {
+                                throw "All functions have already been disconnected or removed.";
                             }
                         },
                     };
@@ -53,6 +62,10 @@ class Person {
         }
     }
 
+    get isDead() {
+        return this.#isDead;
+    }
+
     get Friends() {
         const ShallowCopy = [];
         for (const Friend of this.#Friends) {
@@ -61,8 +74,8 @@ class Person {
         return ShallowCopy;
     }
 
-    get ID() {
-        return this.#ID;
+    get Id() {
+        return this.#Id;
     }
 
     get isPerson() {
@@ -97,7 +110,14 @@ class Person {
         return "Person: " + this + ", Method: " + Method;
     }
 
+    #safetyCheck() {
+        if (this.#isDead == true) {
+            throw this + " is dead.";
+        }
+    }
+
     addFriend(Person, dontThrowIfAlreadyFriends) {
+        this.#safetyCheck();
         dontThrowIfAlreadyFriends = dontThrowIfAlreadyFriends ?? false;
         this.#validatePerson(Person, this.#getContext("addFriend"));
         if (Person == this) throw this + " can't be friends with themself.";
@@ -112,6 +132,7 @@ class Person {
     }
 
     removeFriend(Person, dontThrowIfNotFriends) {
+        this.#safetyCheck();
         dontThrowIfNotFriends = dontThrowIfNotFriends ?? false;
         this.#validatePerson(Person, this.#getContext("addFriend"));
         const Index = this.#Friends.findIndex((Friend) => Person.ID == Friend.ID);
@@ -126,6 +147,21 @@ class Person {
         return this.#Friends;
     }
 
+    Say(Message, returnString) {
+        Message = Message ?? "nothing";
+        returnString = returnString ?? false;
+        if (returnString == false) {
+            console.log(this + " said: " + Message);
+        } else if (returnString == true) {
+            return this + " said: " + Message;
+        }
+    }
+
+    Kill() {
+        this.#isDead = true;
+        this.Died.Fire();
+    }
+
     toString() {
         return this.Name;
     }
@@ -134,6 +170,8 @@ class Person {
         console.log(this);
     }
 }
+
+exports.Person = Person;
 
 const Bob = new Person("Bob", 10);
 const Jimmy = new Person("Jimmy", 10);
@@ -158,5 +196,16 @@ Jimmy.friendAdded.Connect(function (Values) {
     console.log("Jimmy has gained a friend: " + Friend);
 });
 
+Bob.Died.Connect(function () {
+    console.log("Bob has died.");
+});
+
+Jimmy.Died.Connect(function () {
+    console.log("Jimmy has died.");
+});
+
 Bob.addFriend(Jimmy);
 Jimmy.removeFriend(Bob);
+
+Bob.Say("Jimmy, I'm going to kill you! >:(");
+Jimmy.Kill();
