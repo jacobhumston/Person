@@ -32,3 +32,9 @@ Carl.Log();
 # Docs
 
 Coming soon.
+
+# Style
+
+One word: `User`
+
+Two words: `userData`
