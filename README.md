@@ -4,7 +4,7 @@ Created by jacobhumston as a fun project, also to learn how to use javascript cl
 
 # Installation
 
-1. Copy and paste the `Person.js` into wherever you plan on using it.
+1. Copy and paste the `Person.js` file into wherever you plan on using it.
 2. Install needed packages.
 
 ```
