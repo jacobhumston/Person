@@ -3,16 +3,18 @@ const { v4: createId } = require("uuid");
 class Person {
     Name;
     Age;
+    #Money;
     #isDead;
     #Friends;
     #Id;
     #isPerson;
     #createdAt;
-    #Events = ["friendAdded", "friendRemoved", "Died"];
+    #Events = ["friendAdded", "friendRemoved", "Died", "moneyChanged"];
 
     constructor(Name, Age) {
         this.Name = Name ?? "No Name";
         this.Age = Age ?? 0;
+        this.#Money = 100;
         this.#isDead = false;
         this.#Friends = [];
         this.#Id = createId();
@@ -62,6 +64,10 @@ class Person {
                 },
             };
         }
+    }
+
+    get Money() {
+        return this.#Money;
     }
 
     get isDead() {
@@ -116,6 +122,21 @@ class Person {
         if (this.#isDead == true) {
             throw this + " is dead.";
         }
+    }
+
+    #addMoney(Amount) {
+        this.#Money = this.#Money + Amount;
+        this.moneyChanged.Fire(this.#Money);
+    }
+
+    #subtractMoney(Amount) {
+        this.#Money = this.#Money - Amount;
+        this.moneyChanged.Fire(this.#Money);
+    }
+
+    #setMoney(Amount) {
+        this.#Money = this.#Money = Amount;
+        this.moneyChanged.Fire(this.#Money);
     }
 
     disconnectAllEvents() {
