@@ -31,15 +31,5 @@ Jimmy.Died.Connect(function () {
     console.log("Jimmy has died.");
 });
 
-Bob2 = Bob.Clone();
-Bob2.Name = "I'm alive...";
-
-Bob.addFriend(Jimmy);
-Jimmy.removeFriend(Bob);
-
-Bob.Say("Jimmy, I'm going to kill you! >:(");
-Jimmy.Kill();
-
-Jimmy.Log();
-console.log(Bob.disconnectAllEvents());
-Jimmy.removeFriend(Bob);
+console.log(Bob.Id)
+console.log(Jimmy.Id)
