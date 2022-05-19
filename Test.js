@@ -31,5 +31,5 @@ Jimmy.Died.Connect(function () {
     console.log("Jimmy has died.");
 });
 
-console.log(Bob.Id)
-console.log(Jimmy.Id)
+console.log(Bob.Id);
+console.log(Jimmy.Id);
