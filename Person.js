@@ -1,4 +1,4 @@
-const { v4: uuid } = require("uuid");
+const { v4: createId } = require("uuid");
 
 class Person {
     Name;
@@ -15,7 +15,7 @@ class Person {
         this.Age = Age ?? 0;
         this.#isDead = false;
         this.#Friends = [];
-        this.#Id = uuid();
+        this.#Id = createId();
         this.#isPerson = true;
         this.#createdAt = new Date(Date.now());
         for (const Event of this.#Events) {
